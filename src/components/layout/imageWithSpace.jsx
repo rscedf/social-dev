@@ -30,8 +30,15 @@ const StyledContainer = styled.div`
     }
 
     display:flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: column;  
+    
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+
+    &:before, &:after {
+        content: ' ';
+        margin: auto;
+    }
 `
 
 function ImageWithSpace ({children,image}){
