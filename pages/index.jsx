@@ -1,9 +1,16 @@
+import Navbar from "../src/components/layout/Navbar"
+
 function HomePage () {
   
   return (
-    <div>
-      SejaDev
-    </div>
+    <>
+      <Navbar></Navbar>
+      <div>
+        SejaDev
+      </div>
+    
+    </>
+    
   )
 }
 
