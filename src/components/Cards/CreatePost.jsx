@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from "styled-components"
 import H4 from '../tipografia/H4'
-import Textarea from "../inputs/TextArea";
+import Textarea from "../inputs/TextArea"
 import Button from "../inputs/button"
 
 const PostContainer = styled.div`
