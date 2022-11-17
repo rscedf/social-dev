@@ -10,6 +10,8 @@ const Button = styled.button`
     font-size: 16px;
     cursor:pointer;
     transition: 0.3s;
+    height: 50px;
+    width: 150px;
 
     :hover{
         background-color: ${props => props.theme.primaryHover};
