@@ -1,5 +1,11 @@
+import { useState } from "react"
 import styled from "styled-components"
 import Link from "next/link"
+import {useForm} from 'react-hook-form'
+import {joiResolver} from '@hookform/resolvers/joi'
+
+
+import { signupSchema } from '../modules/user/user.schema'
 
 import ImageWithSpace from "../src/components/layout/imageWithSpace"
 import H1 from "../src/components/tipografia/H1"
@@ -22,6 +28,17 @@ const Text = styled.p`
 `
 
 function SignupPage(){
+
+    const{register, handleSubmit, formState:{errors} } = useForm({
+        resolver: joiResolver(signupSchema)
+    })
+
+    const handleForm = (data) => {
+        console.log(data)
+        
+    }
+    console.log(errors)
+
     return(
         <ImageWithSpace>
             <H1># Social Dev</H1>
@@ -29,13 +46,13 @@ function SignupPage(){
             <FormContainer>
                 <H2>Crie sua conta</H2>
             
-                <Form>
-                    <Input Label="Nome"/>
-                    <Input Label="Sobrenome"/>
-                    <Input Label="Usuário" />
-                    <Input Label="Email ou Usuário" type="email"/>
-                    <Input Label="Senha" type="password"/>
-                    <Button>Entrar</Button>
+                <Form onSubmit={handleSubmit(handleForm)}>
+                    <Input Label="Nome" {...register('firstName') } />
+                    <Input Label="Sobrenome" {...register('lastName') } />
+                    <Input Label="Usuário" {...register('user') } />
+                    <Input Label="Email" type="email" {...register('email') } />
+                    <Input Label="Senha" type="password" {...register('password') } />
+                    <Button type="submit">Cadastrar</Button>
                 </Form>
                 <Text>Já possui uma conta? <Link href="/login">Faça seu login</Link></Text>
             </FormContainer>

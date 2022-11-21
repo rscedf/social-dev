@@ -1,3 +1,4 @@
+import { ForwardedRef, forwardRef } from "react";
 import styled from "styled-components";
 
 const InputContainer = styled.div`
@@ -17,14 +18,13 @@ const StyledInput = styled.input`
     border-radius: 10px;
 `
 
-function Input({Label, ...props}){
-
+const Input = forwardRef(({Label, ...props}, ref) => {
     return (
         <InputContainer>
             <StyledLabel>{Label}</StyledLabel>
-            <StyledInput placeholder={Label} {...props}/>
+            <StyledInput placeholder={Label} {...props} ref={ref}/>
         </InputContainer>
     )
-} 
+} )
 
 export default Input
