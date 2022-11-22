@@ -32,7 +32,8 @@ const ErrorLabel = styled.span`
 
 const errorMessage = {
     'string.empty' : 'Este campo é obrigatório',
-    'string.email' : 'Email inválido'
+    'string.email' : 'Email inválido',
+    'duplicate' : 'Já existe conta registrada com esse valor'
 }
 
 const Input =({Label, name, control, defaultValue = '', ...props}) => {

@@ -1,4 +1,4 @@
-import Joi from 'joi'
+import Joi, { object } from 'joi'
 import { withIronSessionApiRoute } from 'iron-session/next'
 
 import createHandler from '../../../lib/middleware/nextConnect'
@@ -25,7 +25,12 @@ signup.post(validate({ body: signupSchema}), async(req, res)=> {
 
         res.status(201).json({ ok: true })
     } catch (error) {
-        console.error(error)
+        if (error.code === 11000){
+            return res.status(400).send({
+                code: 11000,
+                duplicatekey: Object.keys(error.keyPattern)[0]
+            })
+        }
         throw error
     }      
     
