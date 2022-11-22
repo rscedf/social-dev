@@ -7,14 +7,19 @@ const Button = styled.button`
     border: 0;
     font-weight: bold;
     color: ${props => props.theme.white};
-    font-size: 16px;
-    cursor:pointer;
+    font-size: 16px;    
     transition: 0.3s;
     height: 50px;
     width: 150px;
 
+    ${props => !props.disabled && 'cursor: pointer;'}
+
     :hover{
         background-color: ${props => props.theme.primaryHover};
+    }
+
+    :disabled{
+        background-color: ${props => props.theme.disabled};
     }
 `
 
