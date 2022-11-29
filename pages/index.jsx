@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react"
 import styled from "styled-components"
 import {withIronSessionSsr} from 'iron-session/next'
+import axios from "axios"
 
 import {ironConfig} from '../lib/middleware/ironSession'
 
@@ -8,6 +10,7 @@ import Container from "../src/components/layout/Container"
 import CreatePost from "../src/components/Cards/CreatePost"
 import H3 from "../src/components/tipografia/H3"
 import Post from "../src/components/Cards/Posts"
+import { setRevalidateHeaders } from "next/dist/server/send-payload"
 
 const Content = styled.div`
   margin: 50px 0;  
@@ -31,7 +34,20 @@ const PostContainer = styled.div`
 `
 
 function HomePage ({user}) {
-  
+
+  const [data, setData] = useState([])
+   
+  const handlePosts = async() => {    
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/post`)
+    setData(response.data)
+  }
+
+  useEffect(()=> {
+    handlePosts()
+  },[])
+
+  console.log(data)
+
   return (
     <>
       <Navbar /> 
@@ -43,8 +59,16 @@ function HomePage ({user}) {
             <RefreshPosts>Carregar novas postagens</RefreshPosts>
           </RefreshPostsContainer>
           <PostContainer>
-            <Post />
-            <Post />
+            {
+              data.map(post => 
+                <Post
+                  key={post._id}
+                  text={post.text}
+                  user={post.createdBy.user}
+                  date={post.createdDate}
+                />
+              )
+            }
           </PostContainer>
         </Container>        
       </Content>
