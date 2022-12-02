@@ -4,7 +4,7 @@ import createHandler from '../../../lib/middleware/nextConnect'
 import validate from '../../../lib/middleware/validate'
 
 import { ironConfig } from '../../../lib/middleware/ironSession'
-import { createPostSchema}from '../../../modules/post/post,schema'
+import { createPostSchema}from '../../../modules/post/post.schema'
 import { createPost, getPost } from '../../../modules/post/post.service'
 
 const handler = createHandler()

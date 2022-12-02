@@ -48,10 +48,7 @@ const { data } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/post`, fetcher)
       <Content>
         <Container>
           <CreatePost username={user.user} />
-          <LastPostText>Últimas postagens:</LastPostText>
-          <RefreshPostsContainer>
-            <RefreshPosts>Carregar novas postagens</RefreshPosts>
-          </RefreshPostsContainer>
+          <LastPostText>Últimas postagens:</LastPostText>          
           <PostContainer>
             {
               data?.map(post => 
