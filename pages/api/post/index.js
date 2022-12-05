@@ -4,8 +4,8 @@ import createHandler from '../../../lib/middleware/nextConnect'
 import validate from '../../../lib/middleware/validate'
 
 import { ironConfig } from '../../../lib/middleware/ironSession'
-import { createPostSchema}from '../../../modules/post/post.schema'
-import { createPost, getPost } from '../../../modules/post/post.service'
+import { createPostSchema, deletePostSchema}from '../../../modules/post/post.schema'
+import { createPost, deletePost, getPost } from '../../../modules/post/post.service'
 
 const handler = createHandler()
 
@@ -29,6 +29,19 @@ handler
             const posts = await getPost()
             res.status(200).send(posts)
             
+        } catch (error) {
+            return res.status(500).send(error.message)
+        }
+    })
+    .delete(validate(deletePostSchema), async(req, res)=>{
+        try {
+            if(!req.session.user) return res.status(401).send()
+            const deletedPost = await deletePost(req.body.id, req.session.user)            
+            if(deletedPost){
+                return res.status(200).send({ ok: true })
+            }
+            else return res.status(400).send( 'post not found')
+
         } catch (error) {
             return res.status(500).send(error.message)
         }

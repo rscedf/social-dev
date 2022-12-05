@@ -39,7 +39,7 @@ const Menu = ({options=[]}) => {
         document.addEventListener('click', handleOutside, true)
 
         return ()=>{
-            document.removeEventListener('click', handleClickOutside, true)
+            document.removeEventListener('click', handleOutside, true)
         }
     },[menuRef])
     

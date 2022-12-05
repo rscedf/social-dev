@@ -57,6 +57,8 @@ const { data } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/post`, fetcher)
                   text={post.text}
                   user={post.createdBy.user}
                   date={post.createdDate}
+                  isOwner={post.createdBy._id === user.id}
+                  id={post._id}
                 />
               )
             }
