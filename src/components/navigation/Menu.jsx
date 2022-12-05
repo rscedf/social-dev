@@ -1,4 +1,6 @@
+import { useState, useRef, useEffect } from "react"
 import styled from "styled-components"
+
 
 const Dots = styled.img`
     cursor: pointer;
@@ -10,7 +12,7 @@ const StyledMenu = styled.div`
     right: 0;
     background-color: ${props => props.theme.white};
 
-    display: block;
+    display: ${props => props.show ? 'block' : 'none'};
 `
 const StyledOption = styled.div`
     padding: 15px;
@@ -24,17 +26,38 @@ const StyledContainerMenu = styled.div`
     position: relative;
 `
 
-const Menu = () => {
+const Menu = ({options=[]}) => {
+    const [show, setShow] = useState(false)
+    const menuRef = useRef(null)
+
+    useEffect(()=>{
+        const handleOutside = (event)=> {
+            if(menuRef.current && !menuRef.current.contains(event.target)){
+                setShow(false)
+            }
+        }
+        document.addEventListener('click', handleOutside, true)
+
+        return ()=>{
+            document.removeEventListener('click', handleClickOutside, true)
+        }
+    },[menuRef])
+    
+
     return(
         <StyledContainerMenu>
-            <Dots src="/three-dots.svg" height="20px" />
-            <StyledMenu>
-                <StyledOption>
-                    Editar post
-                </StyledOption>
-                <StyledOption>
-                    Deletar post
-                </StyledOption>
+            <Dots src="/three-dots.svg" height="20px" onClick={()=>setShow(!show)} />
+            <StyledMenu show={show} ref={menuRef} onBlur= {()=> setShow(false)} >
+                {
+                    options.map((option,pos)=>
+                    <StyledOption 
+                        key={`menu-option-${pos}`}
+                        onClick={option.onClick}
+                        >
+                        {option.text}
+                    </StyledOption>
+                    )
+                }        
             </StyledMenu>
         </StyledContainerMenu>
     )
