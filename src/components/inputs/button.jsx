@@ -22,16 +22,18 @@ const StyledButton = styled.button`
         background-color: ${props => props.theme.disabled};
     }
 `
-const Button = (children, Loading, disabled, ...props)=>{
+const Button = ({children, Loading, disabled, ...props})=>{   
+        
     return (
     <StyledButton 
         disabled={disabled || Loading}
         {...props}
     >
         {Loading && <img src="./loading.svg" width="14px" />}
-        {!Loading && children}
-    </StyledButton>
+        {!Loading && children}        
+    </StyledButton>    
     )
+    
 }
 
 export default Button
