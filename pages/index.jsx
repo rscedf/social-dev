@@ -40,9 +40,7 @@ function HomePage ({user}) {
    
 const { data } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/post`, fetcher)  
 
-  console.log(data)
-
-  return (
+    return (
     <>
       <Navbar /> 
       <Content>
@@ -58,7 +56,8 @@ const { data } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/post`, fetcher)
                   user={post.createdBy.user}
                   date={post.createdDate}
                   isOwner={post.createdBy._id === user.id}
-                  id={post._id}
+                  id={post._id}                
+
                 />
               )
             }

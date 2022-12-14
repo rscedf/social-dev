@@ -1,3 +1,4 @@
+import { useState } from "react"
 import styled from "styled-components"
 import { useForm } from "react-hook-form"
 import { joiResolver} from "@hookform/resolvers/joi"
@@ -9,6 +10,7 @@ import { createPostSchema} from '../../../modules/post/post.schema'
 import H4 from '../tipografia/H4'
 import ControlledTextArea from "../inputs/controlledTextArea"
 import Button from "../inputs/button"
+import { trace } from "joi"
 
 
 const PostContainer = styled.div`
@@ -45,11 +47,22 @@ function CreatePost({username}){
         mode: 'all'
     })
 
+    const [loading, setLoading] = useState(false)
+
     const onSubmit = async (data) =>{
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/post`, data)
-        if(response.status === 201){
-            reset()
-            mutate(`${process.env.NEXT_PUBLIC_API_URL}/api/post`)
+        setLoading(true) 
+        try {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/post`, data)
+            if(response.status === 201){
+                reset()
+                mutate(`${process.env.NEXT_PUBLIC_API_URL}/api/post`)
+            }
+        } catch (error) {
+            console.error(error)
+                
+        }finally{
+            setLoading(false)
+            
         }
     }
 
@@ -68,7 +81,7 @@ function CreatePost({username}){
                  </TextContainer>
                 <BottonContainer>
                     <BottonText>A sua mensagem será pública</BottonText>
-                    <Button disabled= { !isValid } >Postar Mensagem</Button>
+                    <Button Loading={loading} disabled= { !isValid } >Postar Mensagem</Button>
                 </BottonContainer>
             </form>
             
